@@ -34,7 +34,7 @@ class Mithril{
     return macro Mithril.withAttr($v{name}, function(v) $expr = v);
   }
   public static macro function component<D, T:Component<D>>(expr:haxe.macro.Expr.ExprOf<Class<T>>, arg:haxe.macro.Expr.ExprOf<D>){
-    return macro (new Mithril.Comp($expr, $arg):Mithril.Node);
+    return macro new Mithril.Comp($expr, $arg);
   }
   #if !macro
 

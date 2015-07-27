@@ -45,6 +45,7 @@ class Mithril{
   static inline function set_routeMode(v:String):String return (untyped route).mode = v;
 
   public static inline function getRoute():String return (untyped route)();
+  public static inline function setRoute(v:String):Void (untyped route)(v);
   public static function route(el:js.html.Element, def:String, routes:Dynamic):Void;
 
   public static function prop<T>(v:T):Prop<T>;

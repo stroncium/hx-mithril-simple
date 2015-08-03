@@ -6,9 +6,12 @@ private typedef Component<D> = {
 }
 
 class Comp<D, T:Component<D>>{
+  var attrs:Null<{key:String}>;
 #if !macro
-  public function new(cl:Class<T>, arg:D){
+  public function new(cl:Class<T>, arg:D, key:String){
     controller = function() return untyped __js__('new cl')(arg);
+    if(key != null) attrs = {key:key};
+
   }
   var controller:Dynamic;
   function view(ctrl){
@@ -33,9 +36,8 @@ class Mithril{
   public static macro function setAttr(name:String, expr:haxe.macro.Expr){
     return macro Mithril.withAttr($v{name}, function(v) $expr = v);
   }
-  public static macro function component<D, T:Component<D>>(expr:haxe.macro.Expr.ExprOf<Class<T>>, ?arg:haxe.macro.Expr.ExprOf<D>){
-    if(arg == null) arg = macro null;
-    return macro new Mithril.Comp($expr, $arg);
+  public static macro function component<D, T:Component<D>>(expr:haxe.macro.Expr.ExprOf<Class<T>>, ?arg:haxe.macro.Expr.ExprOf<D>, ?key:haxe.macro.Expr.ExprOf<String>){
+    return macro new Mithril.Comp($expr, $arg, $key);
   }
   #if !macro
 

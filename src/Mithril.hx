@@ -1,3 +1,5 @@
+#if !macro
+
 private typedef Prop<T> = ?T->T;
 
 private typedef Component<D> = {
@@ -7,7 +9,6 @@ private typedef Component<D> = {
 
 class Comp<D, T:Component<D>>{
   var attrs:Null<{key:String}>;
-#if !macro
   public function new(cl:Class<T>, arg:D, key:String){
     controller = function() return untyped __js__('new cl')(arg);
     if(key != null) attrs = {key:key};
@@ -17,7 +18,6 @@ class Comp<D, T:Component<D>>{
   function view(ctrl){
     return ctrl.view();
   }
-#end
 }
 
 private typedef Promize = Dynamic;
@@ -27,18 +27,29 @@ abstract Node(Dynamic) from Comp<Dynamic, Dynamic> from String from Float from A
 }
 
 private typedef MithrilFn = String->?Dynamic->?Node->Node;
-@:native('M')
-#if !macro extern #end
+
+#else // Types macros need to run
+  private typedef Component<T> = Dynamic;
+#end
+
+#if !macro @:native('M') extern #end
 class Mithril{
+
+  // MACRO HELPERS
   public static macro function set(expr:haxe.macro.Expr){
     return macro function(v) $expr = v;
   }
+
   public static macro function setAttr(name:String, expr:haxe.macro.Expr){
     return macro Mithril.withAttr($v{name}, function(v) $expr = v);
   }
+
   public static macro function component<D, T:Component<D>>(expr:haxe.macro.Expr.ExprOf<Class<T>>, ?arg:haxe.macro.Expr.ExprOf<D>, ?key:haxe.macro.Expr.ExprOf<String>){
     return macro new Mithril.Comp($expr, $arg, $key);
   }
+
+
+  // REAL METHODS
   #if !macro
 
   public static inline function routeParam(name:String):Null<String> return (untyped route).param(name);

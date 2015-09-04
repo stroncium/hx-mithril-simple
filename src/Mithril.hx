@@ -61,6 +61,7 @@ class Mithril{
   public static inline function setRoute(v:String):Void (untyped route)(v);
   public static function route(el:js.html.Element, def:String, routes:Dynamic):Void;
 
+  public static function trust(code:String):Node;
   public static function prop<T>(v:T):Prop<T>;
   public static function module(el:js.html.Element, comp:Node):Void;
   public static function withAttr(name:String, fn:Dynamic->Void):Void->Void;

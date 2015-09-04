@@ -45,7 +45,7 @@ class Mithril{
   }
 
   public static macro function component<D, T:Component<D>>(expr:haxe.macro.Expr.ExprOf<Class<T>>, ?arg:haxe.macro.Expr.ExprOf<D>, ?key:haxe.macro.Expr.ExprOf<String>){
-    return macro new Mithril.Comp($expr, $arg, $key);
+    return macro (new Mithril.Comp($expr, $arg, $key):Mithril.Node);
   }
 
 
@@ -62,7 +62,7 @@ class Mithril{
   public static function route(el:js.html.Element, def:String, routes:Dynamic):Void;
 
   public static function prop<T>(v:T):Prop<T>;
-  public static function module(el:js.html.Element, comp:Comp<Dynamic, Dynamic>):Void;
+  public static function module(el:js.html.Element, comp:Node):Void;
   public static function withAttr(name:String, fn:Dynamic->Void):Void->Void;
   public static function request(opts:Dynamic):Promize;
   public static function startComputation():Void;

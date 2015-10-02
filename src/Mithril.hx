@@ -63,7 +63,7 @@ class Mithril{
 
   public static function trust(code:String):Node;
   public static function prop<T>(v:T):Prop<T>;
-  public static function module(el:js.html.Element, comp:Node):Void;
+  public static function mount(el:js.html.Element, comp:Node):Void;
   public static function withAttr(name:String, fn:Dynamic->Void):Void->Void;
   public static function request(opts:Dynamic):Promize;
   public static function startComputation():Void;
